@@ -5,12 +5,15 @@ on:
   schedule:
     - cron: '30 11 * * *'
 
+permissions:
+  contents: read
+
 jobs:
   prepare:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Python
@@ -18,5 +21,11 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Run automation
-        run: python pipeline.py 
+      - name: Run YouTube automation
+        run: python pipeline.py
+
+      - name: Save video plan
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-video-plan
+          path: output/
