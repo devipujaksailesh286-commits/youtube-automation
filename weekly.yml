@@ -1,0 +1,22 @@
+name: Daily YouTube Research
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 11 * * *'
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run automation
+        run: python pipeline.py
